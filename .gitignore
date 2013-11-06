@@ -1,3 +1,4 @@
 *.phar
+.*.sw[mnop]
 composer.lock
 /vendor/
