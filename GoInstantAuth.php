@@ -1,15 +1,18 @@
 <?php
+/**
+ * GoInstantAuth is &copy; 2013 GoInstant Inc., a salesforce.com company.
+ * All Rights Reserved.
+ */
 
 /**
  * GoInstantAuth - GoInstant Authentication for Your PHP Application
  *
- * This is an implementation of JWT tokens consistent with what's specified at
- * https://developers.goinstant.com/v1/guides/users_and_authentication.html
+ * This is an implementation of JWT tokens consistent with what's specified in
+ * the <a href="https://developers.goinstant.com/v1/guides/users_and_authentication.html">GoInstant Users and Authentication Guide</a>.
  *
  * This library is not intended as a general-use JWT library; see JWT-php for
- * that. At the time of this writing, GoInstant supports the JWT IETF draft
- * version 8
- * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08
+ * that. At the time of this writing, GoInstant supports the
+ * <a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08">JWT IETF draft version 8</a>
  *
  * Usage:
  *
@@ -124,17 +127,21 @@ class GoInstantAuth {
    * <ul>
    *   <li><b>domain</b> The top-level domain of your system</li>
    *   <li><b>id</b> The identity of this user on your system</li>
-   *   <li><b>displayName</b> The name you want to display initially for this user</li>
+   *   <li><b>displayName</b> The name you want to display initially for this
+   *   user</li>
    * </ul>
    *
-   * Optionally, a <b>groups</b> array can be passed in.  Each group is required to have:
+   * Optionally, a <b>groups</b> array can be passed in.  Each group is
+   * required to have:
    * <ul>
    *   <li><b>id</b> The identity of this group</li>
    *   <li><b>displayName</b> The name you want to display for this group</li>
    * </ul>
    *
    * @param array $userData associative-array of user properties
-   * @return string a JWT in JWS format for use with GoInstant
+   * @param array $extraHeader optional claims for the JWT header.  See the
+   * JWT/JWS spec for valid items.
+   * @return string a JWT in Compact JWS format for use with GoInstant
    */
   public function sign($userData, $extraHeader=array()) {
     $claims = $this->userDataToClaims($userData);
