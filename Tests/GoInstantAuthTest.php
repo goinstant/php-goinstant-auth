@@ -33,25 +33,29 @@ class ConstructorTest extends PHPUnit_Framework_TestCase {
  */
 class SignTest extends PHPUnit_Framework_TestCase {
 
-  private function validateJwt($jwt, $expectClaims=array()) {
+  private function validateJwt($jwt, $expectClaims, $expectSig='') {
     $parts = explode('.', $jwt);
     $this->assertCount(3, $parts);
-    $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[0]);
-    $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[1]);
-    // since we currently only support HS256, the signature part is fixed-size:
-    $this->assertRegExp('/^[a-z0-9_\-]{43}$/i', $parts[2]);
 
+    // validate header
+    $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[0]);
     $header = GoInstantAuth::compact_decode($parts[0]);
     $this->assertEquals(2, count($header));
     $this->assertEquals('JWT', $header['typ']);
     $this->assertEquals('HS256', $header['alg']);
 
+    // validate payload (claims)
+    $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[1]);
     $claims = GoInstantAuth::compact_decode($parts[1]);
     $this->assertEquals($expectClaims, $claims);
+
+    // since we currently only support HS256, the signature part is fixed-size:
+    $this->assertRegExp('/^[a-z0-9_\-]{43}$/i', $parts[2]);
+    $this->assertEquals($expectSig, $parts[2]);
   }
 
   protected function setUp() {
-    $this->auth = new GoInstantAuth('HKYdFdnezle2yrI2_Ph3cHz144bISk-cvuAbeBNB030');
+    $this->auth = new GoInstantAuth('HKYdFdnezle2yrI2_Ph3cHz144bISk-cvuAbeAAA999');
   }
 
   public function testNoClaims() {
@@ -116,12 +120,13 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'groups' => array()
     ));
 
+    $expectedSig = 'dADc6pHmdwlQaGivtuPbtGHu8mp8KJOlbd14Clkb5SY';
     $this->validateJwt($jwt, array(
       'sub' => 'bar',
       'iss' => 'example.com',
       'dn' => 'Bob',
       'g' => array()
-    ));
+    ), $expectedSig);
   }
 
   public function testGroupMissingId() {
@@ -166,6 +171,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       )
     ));
 
+    $expectedSig = 'sZsLJBx6p1G0GBWcBKnQhA8LUbngx05melHRd2GqqKc';
     $this->validateJwt($jwt, array(
       'sub' => 'bar',
       'iss' => 'example.com',
@@ -174,7 +180,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
         array('id' => 1234, 'dn' => 'Group 1234'),
         array('id' => 42, 'dn' => 'Meaning Group')
       )
-    ));
+    ), $expectedSig);
   }
 }
 
