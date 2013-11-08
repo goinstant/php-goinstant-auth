@@ -4,7 +4,7 @@
          include="."
          strict="true">
     <testsuite name="GoInstantAuth Test Suite">
-        <directory suffix="Test.php">./Tests</directory>
+        <directory suffix="Test.php">./GoInstant</directory>
     </testsuite>
     <logging>
         <log type="coverage-clover" target="./build/logs/clover.xml"/>

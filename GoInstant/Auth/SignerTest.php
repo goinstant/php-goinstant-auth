@@ -1,37 +1,40 @@
 <?php
 
-require_once 'GoInstantAuth.php';
+require_once 'GoInstant/Auth/Signer.php';
+require_once 'GoInstant/Auth/Util.php';
+use GoInstant\Auth\Util;
+use GoInstant\Auth\Signer;
 
 /**
  * Test constructor (which checks JWS parameters like keys).
  */
-class ConstructorTest extends PHPUnit_Framework_TestCase {
+class SignerConstructorTest extends PHPUnit_Framework_TestCase {
 
   public function testNoKeySet() {
     $this->setExpectedException(
       'InvalidArgumentException', 'Secret Key must be a string'
     );
-    new GoInstantAuth(NULL);
+    new Signer(NULL);
   }
 
   public function testNotBase64() {
     $this->setExpectedException(
       'InvalidArgumentException', 'Secret Key must be base64 or base64url'
     );
-    new GoInstantAuth('$%^');
+    new Signer('$%^');
   }
 
   public function testNoBase64Padding() {
     // "GoInsta" -> "R29JbnN0YW=="
-    $auth = new GoInstantAuth('R29JbnN0YW');
-    $this->assertInstanceOf('GoInstantAuth', $auth);
+    $auth = new Signer('R29JbnN0YW');
+    $this->assertInstanceOf('\GoInstant\Auth\Signer', $auth);
   }
 }
 
 /**
  * Test token signature/creation.
  */
-class SignTest extends PHPUnit_Framework_TestCase {
+class SignerSignTest extends PHPUnit_Framework_TestCase {
 
   private function validateJwt($jwt, $expectClaims, $expectSig='') {
     $parts = explode('.', $jwt);
@@ -39,14 +42,14 @@ class SignTest extends PHPUnit_Framework_TestCase {
 
     // validate header
     $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[0]);
-    $header = GoInstantAuth::compact_decode($parts[0]);
+    $header = Util::compact_decode($parts[0]);
     $this->assertEquals(2, count($header));
     $this->assertEquals('JWT', $header['typ']);
     $this->assertEquals('HS256', $header['alg']);
 
     // validate payload (claims)
     $this->assertRegExp('/^[a-z0-9_\-]+$/i', $parts[1]);
-    $claims = GoInstantAuth::compact_decode($parts[1]);
+    $claims = Util::compact_decode($parts[1]);
     $this->assertEquals($expectClaims, $claims);
 
     // since we currently only support HS256, the signature part is fixed-size:
@@ -55,7 +58,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
   }
 
   protected function setUp() {
-    $this->auth = new GoInstantAuth('HKYdFdnezle2yrI2_Ph3cHz144bISk-cvuAbeAAA999');
+    $this->signer = new Signer('HKYdFdnezle2yrI2_Ph3cHz144bISk-cvuAbeAAA999');
   }
 
   public function testNoClaims() {
@@ -63,7 +66,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'userData must be an array'
     );
 
-    $this->auth->sign(null);
+    $this->signer->sign(null);
   }
 
   public function testIdMissing() {
@@ -71,7 +74,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'missing required key: id'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'domain' => 'example.com',
       'displayName' => 'bob'
     ));
@@ -82,7 +85,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'missing required key: domain'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'id' => 'bar',
       'displayName' => 'bob'
     ));
@@ -93,7 +96,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'missing required key: displayName'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com'
     ));
@@ -104,7 +107,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'optional "groups" key must be an array'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com',
       'displayName' => 'bob',
@@ -113,14 +116,14 @@ class SignTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testHappyNoGroups() {
-    $jwt = $this->auth->sign(array(
+    $jwt = $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com',
       'displayName' => 'Bob',
       'groups' => array()
     ));
 
-    $expectedSig = 'UOTAURbgnB9MtDRsHG3yK5-xwyvftnkPd1DCbVbwb3U';
+    $expectedSig = '0NtpgAM9d7p1n0IfFzih5k3zF7Z-f8C-O3_wgHLHEOE';
     $this->validateJwt($jwt, array(
       'aud' => 'goinstant.net',
       'sub' => 'bar',
@@ -135,7 +138,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'group 0 missing required key: id'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com',
       'displayName' => 'Bob',
@@ -150,7 +153,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'InvalidArgumentException', 'group 1 missing required key: displayName'
     );
 
-    $this->auth->sign(array(
+    $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com',
       'displayName' => 'Bob',
@@ -162,7 +165,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testHappyGroups() {
-    $jwt = $this->auth->sign(array(
+    $jwt = $this->signer->sign(array(
       'id' => 'bar',
       'domain' => 'example.com',
       'displayName' => 'Bob',
@@ -172,7 +175,7 @@ class SignTest extends PHPUnit_Framework_TestCase {
       )
     ));
 
-    $expectedSig = 'dudncYXmt1d1arfld8ayOX-2LrA6QKTmpCzs-FbXkAg';
+    $expectedSig = 'UgegL6iBP8PzwYTq_YjocPTb0xykVRZv08L55UlStgo';
     $this->validateJwt($jwt, array(
       'aud' => 'goinstant.net',
       'sub' => 'bar',
