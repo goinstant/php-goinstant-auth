@@ -1,11 +1,12 @@
 language: php
 php:
-  - 5.5
-  - 5.4
-  - 5.3
-
+- 5.5
+- 5.4
+- 5.3
 before_script:
-  - composer install --dev
-
-after_script:
-  - php vendor/bin/coveralls -v
+- composer install --dev
+after_success:
+- php vendor/bin/coveralls -v
+env:
+  global:
+    secure: cn8CWIy6Q5hAPyS4KgkNCwHNy26wTCGVFTANiCXEzkyAZojfxzjIf8XZZFmE5moNo5KzXIzE7M6J1Yq317qLIK/plUaDRh7ty2LjiUdXIjsrp6WzjsWE6mLdq5D+cD9GEsJXzLPpB/MqMVtWNa7xLM0MFJvDJeRpopU119CPews=

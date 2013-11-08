@@ -1,5 +1,4 @@
 # for php-coveralls
 service_name: travis-pro
-repo_token: 6czzCZDDhG1aNuqRWvUz5SO8YwaUczTDL
 src_dir: .
 coverage_clover: ./build/logs/clover.xml
