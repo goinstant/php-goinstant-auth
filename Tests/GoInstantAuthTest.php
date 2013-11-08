@@ -120,8 +120,9 @@ class SignTest extends PHPUnit_Framework_TestCase {
       'groups' => array()
     ));
 
-    $expectedSig = 'dADc6pHmdwlQaGivtuPbtGHu8mp8KJOlbd14Clkb5SY';
+    $expectedSig = 'UOTAURbgnB9MtDRsHG3yK5-xwyvftnkPd1DCbVbwb3U';
     $this->validateJwt($jwt, array(
+      'aud' => 'goinstant.net',
       'sub' => 'bar',
       'iss' => 'example.com',
       'dn' => 'Bob',
@@ -171,8 +172,9 @@ class SignTest extends PHPUnit_Framework_TestCase {
       )
     ));
 
-    $expectedSig = 'sZsLJBx6p1G0GBWcBKnQhA8LUbngx05melHRd2GqqKc';
+    $expectedSig = 'dudncYXmt1d1arfld8ayOX-2LrA6QKTmpCzs-FbXkAg';
     $this->validateJwt($jwt, array(
+      'aud' => 'goinstant.net',
       'sub' => 'bar',
       'iss' => 'example.com',
       'dn' => 'Bob',

@@ -123,6 +123,9 @@ class GoInstantAuth {
   public function sign($userData, $extraHeader=array()) {
     $claims = $this->userDataToClaims($userData);
 
+    // force the `aud` claim
+    $claims['aud'] = 'goinstant.net';
+
     $header = $extraHeader; // copy
     // overwrite:
     $header['typ'] = 'JWT';

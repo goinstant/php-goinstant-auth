@@ -94,6 +94,7 @@ The `sign()` method `$userData` maps to the following JWT claims:
 - `groups` -> `g` (GoInstant private claim)
   - `id` -> `id` (GoInstant private claim)
   - `displayName` -> `dn` (GoInstant private claim)
+- `'goinstant.net'` -> `aud` (standard claim) _automatically added_
 
 For the `$extraHeaders` parameter in `sign()`, the `alg` and `typ` headers will
 be overridden by this library.
