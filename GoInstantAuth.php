@@ -7,30 +7,7 @@
 /**
  * GoInstantAuth - GoInstant Authentication for Your PHP Application
  *
- * This is an implementation of JWT tokens consistent with what's specified in
- * the <a href="https://developers.goinstant.com/v1/guides/users_and_authentication.html">GoInstant Users and Authentication Guide</a>.
- *
- * This library is not intended as a general-use JWT library; see JWT-php for
- * that. At the time of this writing, GoInstant supports the
- * <a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08">JWT IETF draft version 8</a>
- *
- * Usage:
- *
- * <pre>
- *   $auth = new GoInstantAuth($myBase64AppKey);
- *   // ...
- *   $token = $auth->sign(array(
- *     'domain' => 'mydomain.com',
- *     'id' => $user->id,
- *     'displayName' => $user->fullName(),
- *     'groups' => array(
- *       array(
- *         'id' => 'room-'.$roomId,
- *         'displayName' => 'Room '.$roomId
- *       )
- *     )
- *   ));
- * </pre>
+ * See README.md for details and Usage.
  */
 class GoInstantAuth {
 
