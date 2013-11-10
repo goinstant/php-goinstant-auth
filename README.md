@@ -13,21 +13,22 @@ version 8](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08).
 
 # Usage
 
-Creating a signer parses and stores your GoInstant application key.
+Creating a signer parses and stores your GoInstant application key.  The
+application key should be in base64url or base64 string format.
 
-**Remember, the Secret Key needs to be treated like a password!** Never share
-it with your users!
+:warning: **Remember, the Secret Key needs to be treated like a password!**
+Never share it with your users!
 
 ```php
-  $signer = new GoInstantAuth($myBase64AppKey);
+  $signer = new GoInstantAuth($yourGoInstantAppKey);
 ```
 
-You can then use this `$signer` to create multiple tokens.  You should replace
-`example.com` with your website's domain.
+You can then use this `$signer` to create as many tokens as you want. You
+should replace `example.com` with your website's domain. Groups are optional.
 
 ```php
   $token = $signer->sign(array(
-    'domain' => 'example.com',
+    'domain' => 'example.com', // TODO: replace me
     'id' => $user->id,
     'displayName' => $user->fullName(),
     'groups' => array(
