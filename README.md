@@ -14,7 +14,9 @@ version 8](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08).
 # Usage
 
 Creating a signer parses and stores your GoInstant application key.  The
-application key should be in base64url or base64 string format.
+application key should be in base64url or base64 string format. To get your
+key, go to [your goinstant dashboard](https://goinstant.com/dashboard) and
+click on your App.
 
 :warning: **Remember, the Secret Key needs to be treated like a password!**
 Never share it with your users!
