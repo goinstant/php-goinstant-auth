@@ -1,7 +1,5 @@
 <?php
 
-require_once 'GoInstant/Auth/Signer.php';
-require_once 'GoInstant/Auth/Util.php';
 use GoInstant\Auth\Util;
 use GoInstant\Auth\Signer;
 

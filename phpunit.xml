@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/3.7/phpunit.xsd"
+         bootstrap="Tests/bootstrap.php"
          include="."
          strict="true">
     <testsuite name="GoInstantAuth Test Suite">
-        <directory suffix="Test.php">./GoInstant</directory>
+        <directory suffix="Test.php">./Tests</directory>
     </testsuite>
     <logging>
         <log type="coverage-clover" target="./build/logs/clover.xml"/>
