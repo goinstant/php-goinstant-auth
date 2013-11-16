@@ -8,11 +8,14 @@
   "license": "BSD-3-Clause",
   "authors": [
     {
-    "name": "Jeremy Stashewsky",
-    "email": "jeremy@goinstant.com"
-  }
+      "name": "Jeremy Stashewsky",
+      "email": "jeremy@goinstant.com"
+    }
   ],
   "require": {
     "php": ">=5.3.26"
+  },
+  "autoload": {
+    "psr-0": { "GoInstant": "." }
   }
 }
