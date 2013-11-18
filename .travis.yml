@@ -6,7 +6,7 @@ php:
 before_script:
 - composer install --dev
 after_success:
-- php vendor/bin/coveralls -v
+- php vendor/bin/coveralls -v --exclude-no-stmt
 env:
   global:
     secure: "KKR61B3zysW1sLD0lVjee7JywqkotnQdZ8memPbpgXtIfuCgVQnF/ELM3LApgLYheMZQ+Xsa/mH2KNLlucu15kjM5vp/9bmtisgIEd1UbWWXGlqE55z05KJR4q0JX/8jJ+A6GdM9w5ailUGZpzyQQKXAb+Z29zS9H25B2vTFSF8="
