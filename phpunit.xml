@@ -7,6 +7,17 @@
     <testsuite name="GoInstantAuth Test Suite">
         <directory suffix="Test.php">./Tests</directory>
     </testsuite>
+
+    <filter>
+        <whitelist>
+            <directory>./GoInstant</directory>
+            <exclude>
+                <directory>./vendor</directory>
+                <directory>./build</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
     <logging>
         <log type="coverage-clover" target="./build/logs/clover.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
