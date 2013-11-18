@@ -149,8 +149,6 @@ be overridden by this library.
 
 # Support
 
-# Support
-
 Email [GoInstant Support](mailto:support@goinstant.com) or stop by [#goinstant on freenode](irc://irc.freenode.net/#goinstant).
 
 For responsible disclosures, email [GoInstant Security](mailto:security@goinstant.com).
