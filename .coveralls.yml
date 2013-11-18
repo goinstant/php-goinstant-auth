@@ -1,4 +1,4 @@
 # for php-coveralls
-service_name: travis-pro
+service_name: travis
 src_dir: .
 coverage_clover: ./build/logs/clover.xml
