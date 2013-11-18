@@ -1,6 +1,9 @@
 # php-goinstant-auth
 
-GoInstant Authentication for Your PHP Application
+GoInstant Authentication for Your PHP Application.
+
+[![Build Status](https://travis-ci.org/goinstant/php-goinstant-auth.png?branch=master)](https://travis-ci.org/goinstant/php-goinstant-auth)
+[![Coverage Status](https://coveralls.io/repos/goinstant/php-goinstant-auth/badge.png)](https://coveralls.io/r/goinstant/php-goinstant-auth)
 
 This is an implementation of JWT tokens consistent with what's specified in the
 [GoInstant Users and Authentication
