@@ -20,7 +20,7 @@ version 8](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-08).
 Installing with [Composer](https://getcomposer.org) is easy:
 
 ```sh
-  ./composer.phar install goinstant/goinstant-auth
+  ./composer.phar require goinstant/goinstant-auth:dev-master
 ```
 
 If not already done so by your framework, you can autoload composer modules
@@ -64,7 +64,7 @@ Never share it with your users!
 
 ```php
   use \GoInstant\Auth\Signer;
-  $signer = new Signer($yourGoInstantAppKey);
+  $signer = new Signer($secretKey);
 ```
 
 You can then use this `$signer` to create as many tokens as you want. You
