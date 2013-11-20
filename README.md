@@ -151,6 +151,61 @@ The authoritative list of claims used in GoInstant can be found in the [Users an
 For the `$extraHeaders` parameter in `sign()`, the `alg` and `typ` headers will
 be overridden by this library.
 
+# Contributing
+
+If you'd like to contribute to or modify php-goinstant-auth, here's a quick
+guide to get you started.
+
+## Development Dependencies
+
+- [PHP](http://www.php.net/downloads.php) >= 5.3 (5.5 recommended)
+- [Composer](https://getcomposer.org/download/) >= 1.0.0-alpha7
+
+## Set-Up
+
+Download via GitHub and install composer dependencies:
+
+```sh
+git clone git@github.com:goinstant/php-goinstant-auth.git
+cd php-goinstant-auth
+```
+
+If you're developing on a Mac, you may wish to install php and composer through
+Mac Homebrew via the `brew install` command.  Otherwise, follow the
+instructions on [the Composer download page](https://getcomposer.org/download/).
+
+```sh
+composer install || ./composer.phar install
+```
+
+## Testing
+
+Tests are written in PHPUnit. The test files themselves are located in the
+`Tests/` directory.
+
+To run the tests:
+
+```sh
+vendor/bin/phpunit
+```
+
+This may fail on the Coverage step if your PHP doesn't have the XDebug
+extension loaded.  Either remove the coverage step from `phpunit.xml` or
+edit your `php.ini` to include the XDebug extension. XDebug can be
+installed via PEAR or through Mac Homebrew.
+
+## Publishing
+
+When publishing master to a new `$VERSION` (a semver)
+
+1. edit composer.json to bump the version number
+2. `git add -u && git commit -m "$VERSION"`
+3. `git tag $VERSION`
+4. `git push origin master`
+5. `git push --tags`
+
+Go to https://packagist.org/packages/goinstant/goinstant-auth and confirm it published.
+
 # Support
 
 Email [GoInstant Support](mailto:support@goinstant.com) or stop by [#goinstant on freenode](irc://irc.freenode.net/#goinstant).
